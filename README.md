@@ -1,10 +1,5 @@
 # Agentic Workflow를 이용한 기업 정보 분석 
 
-<p align="left">
-    <a href="https://hits.seeyoufarm.com"><img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fkyopark2014%2Focean-agent&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com"/></a>
-    <img alt="License" src="https://img.shields.io/badge/LICENSE-MIT-green">
-</p>
-
 여기에서는 PDF로 된 기업 정보를 원하는 형태의 보고서로 분석하는 agentic workflow에 대해 설명합니다. 여러 종류의 PDF에서 특정 문서를 활용해 데이터를 분석하려면 1/ 문서의 metadata에 관련 정보를 추가해 활용하거나, 2/ [contextual embedding](https://www.anthropic.com/news/contextual-retrieval)을 이용하여 chunk에 추가 정보를 넣어서 활용하는 방안이 있습니다. 여기에서는 문서에서 기업명과 문서 생성일과 같은 정보를 metadata에 추출하는 방법과 prompt를 이용해 chunk의 내용을 요약하는 방법을 모두 활용하여 문서에서 필요한 정보를 충분히 추출하고자 합니다. 보고서의 생성은 [plan and execute 패턴](https://github.com/kyopark2014/writing-agent?tab=readme-ov-file#plan-and-execute)으로 목차와 초안을 작성하고 [reflection을 이용](https://github.com/kyopark2014/writing-agent?tab=readme-ov-file#reflection)해 충분한 context를 제공합니다. Reflection은 각 문단에서 주요 keyword를 추춣하여 RAG를 통해 얻어진 문서를 활용합니다. 문서에는 텍스트뿐 아니라 이미지나 표가 있을 수 있으므로, multimodal을 이용해 그림이나 표로부터 충분한 정보를 가져옵니다. 그리고 RAG 검색의 정확도를 높이면서 충분한 context를 제공할 수 있도록 계층적 chunking을 활용합니다. 생성된 보고서에 대해 사용자의 가독성을 높이기 위해 여기서는 markdown format을 활용하고, html에 markdown 문서를 포함하여 외부로 공유할 URL을 생성합니다. 이 보고서는 pdf와 같은 방식으로 변환하여 별도 문서로도 관리할 수 있습니다. 
 
 기업 정보 요약을 위한 인프라는 Amazon serverless architecture 패턴을 따라 아래와 같이 설계되었습니다. 이러한 architecture는 변화하는 트래픽에 적절히 대응하고 비용을 최적화할 수 있습니다. 또한 AWS CDK를 이용해 편리하게 배포할 수 있습니다. 
